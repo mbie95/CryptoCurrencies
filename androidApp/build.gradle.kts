@@ -44,6 +44,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEa
 
 dependencies {
     implementation(project(":shared"))
+    implementation(libs.koin.android)
     implementation(libs.androidx.activity.compose)
     implementation("androidx.compose.ui:ui:1.7.6")
     implementation("androidx.compose.ui:ui-tooling-preview:1.7.6")
