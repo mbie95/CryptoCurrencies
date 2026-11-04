@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import com.mobile.cryptocurrencies.core.domain.Result
+import com.mobile.cryptocurrencies.core.util.formatFiat
+import com.mobile.cryptocurrencies.core.util.formatPercentage
+import com.mobile.cryptocurrencies.core.util.toUiText
 import kotlinx.coroutines.flow.update
 
 class CoinsListViewModel(
@@ -36,8 +39,8 @@ class CoinsListViewModel(
                                 name = coinItem.coin.name,
                                 iconUrl = coinItem.coin.iconUrl,
                                 symbol = coinItem.coin.symbol,
-                                formattedPrice = coinItem.price.toString(),
-                                formattedChange = coinItem.change.toString(),
+                                formattedPrice = formatFiat(coinItem.price),
+                                formattedChange = formatPercentage(coinItem.change),
                                 isPositive = coinItem.change >= 0,
                             )
                         }
@@ -48,7 +51,7 @@ class CoinsListViewModel(
                 _state.update {
                     it.copy(
                         coins = emptyList(),
-                        error = null
+                        error = coinsResponse.error.toUiText(),
                     )
                 }
             }
