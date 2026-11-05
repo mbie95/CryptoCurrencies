@@ -61,16 +61,15 @@ kotlin {
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
-            implementation(libs.koin.compose.navigation)
 
-            implementation(libs.coil.compose.core)
             implementation(libs.coil.compose)
-            implementation(libs.coil.core)
-            implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor)
         }
         iosMain.dependencies {
             implementation(libs.ktor.ios)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
     }
 }
@@ -92,8 +91,5 @@ room {
 }
 
 dependencies {
-    add("kspAndroid", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("ksp", libs.room.compiler)
 }
