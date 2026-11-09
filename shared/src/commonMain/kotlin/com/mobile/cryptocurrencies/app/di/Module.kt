@@ -1,6 +1,7 @@
 package com.mobile.cryptocurrencies.app.di
 
 import com.mobile.cryptocurrencies.coins.domain.GetCoinDetailsUseCase
+import com.mobile.cryptocurrencies.coins.domain.GetCoinPriceHistoryUseCase
 import com.mobile.cryptocurrencies.coins.domain.GetCoinsListUseCase
 import com.mobile.cryptocurrencies.coins.domain.api.CoinsRemoteDataSource
 import com.mobile.cryptocurrencies.coins.domain.api.KtorCoinsRemoteDataSource
@@ -32,8 +33,9 @@ val sharedModule = module {
     single<HttpClient> { HttpClientFactory.create(get()) }
 
     // coins list
-    viewModel { CoinsListViewModel(get()) }
+    viewModel { CoinsListViewModel(get(), get()) }
     singleOf(::GetCoinsListUseCase)
     singleOf(::KtorCoinsRemoteDataSource).bind<CoinsRemoteDataSource>()
     singleOf(::GetCoinDetailsUseCase)
+    singleOf(::GetCoinPriceHistoryUseCase)
 }

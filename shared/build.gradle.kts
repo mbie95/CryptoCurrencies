@@ -28,7 +28,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "shared"
+            baseName = "Shared"
             isStatic = true
         }
     }
@@ -64,6 +64,7 @@ kotlin {
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+            implementation(libs.coil.svg)
         }
         iosMain.dependencies {
             implementation(libs.ktor.ios)
@@ -75,14 +76,14 @@ kotlin {
 }
 
 android {
-    namespace = "dev.coinroutine.shared"
+    namespace = "com.mobile.cryptocurrencies.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
