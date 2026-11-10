@@ -1,12 +1,13 @@
 package com.mobile.cryptocurrencies.app.di
 
-import com.mobile.cryptocurrencies.coins.domain.GetCoinDetailsUseCase
-import com.mobile.cryptocurrencies.coins.domain.GetCoinPriceHistoryUseCase
-import com.mobile.cryptocurrencies.coins.domain.GetCoinsListUseCase
-import com.mobile.cryptocurrencies.coins.domain.api.CoinsRemoteDataSource
-import com.mobile.cryptocurrencies.coins.domain.api.KtorCoinsRemoteDataSource
-import com.mobile.cryptocurrencies.coins.presentation.CoinsListViewModel
-import com.mobile.cryptocurrencies.core.network.HttpClientFactory
+import androidx.room.RoomDatabase
+import com.mobile.cryptocurrencies.app.coins.domain.GetCoinDetailsUseCase
+import com.mobile.cryptocurrencies.app.coins.domain.GetCoinPriceHistoryUseCase
+import com.mobile.cryptocurrencies.app.coins.domain.GetCoinsListUseCase
+import com.mobile.cryptocurrencies.app.coins.domain.api.KtorCoinsRemoteDataSource
+import com.mobile.cryptocurrencies.app.core.database.portfolio.PortfolioDatabase
+import com.mobile.cryptocurrencies.app.core.database.portfolio.getPortfolioDatabase
+import com.mobile.cryptocurrencies.app.core.network.HttpClientFactory
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -32,10 +33,20 @@ val sharedModule = module {
     // core
     single<HttpClient> { HttpClientFactory.create(get()) }
 
+    // portfolio
+    single {
+        getPortfolioDatabase(get<RoomDatabase.Builder<PortfolioDatabase>>())
+    }
+
     // coins list
-    viewModel { CoinsListViewModel(get(), get()) }
+    viewModel {
+        _root_ide_package_.com.mobile.cryptocurrencies.app.coins.presentation.CoinsListViewModel(
+            get(),
+            get()
+        )
+    }
     singleOf(::GetCoinsListUseCase)
-    singleOf(::KtorCoinsRemoteDataSource).bind<CoinsRemoteDataSource>()
+    singleOf(::KtorCoinsRemoteDataSource).bind<com.mobile.cryptocurrencies.app.coins.domain.api.CoinsRemoteDataSource>()
     singleOf(::GetCoinDetailsUseCase)
     singleOf(::GetCoinPriceHistoryUseCase)
 }

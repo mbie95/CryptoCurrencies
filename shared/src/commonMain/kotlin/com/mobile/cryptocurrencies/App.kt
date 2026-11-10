@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.mobile.cryptocurrencies.coins.presentation.CoinsListScreen
-import com.mobile.cryptocurrencies.theme.AppTheme
+import com.mobile.cryptocurrencies.app.coins.presentation.CoinsListScreen
+import com.mobile.cryptocurrencies.app.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
