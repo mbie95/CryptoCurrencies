@@ -8,6 +8,9 @@ import com.mobile.cryptocurrencies.app.coins.domain.api.KtorCoinsRemoteDataSourc
 import com.mobile.cryptocurrencies.app.core.database.portfolio.PortfolioDatabase
 import com.mobile.cryptocurrencies.app.core.database.portfolio.getPortfolioDatabase
 import com.mobile.cryptocurrencies.app.core.network.HttpClientFactory
+import com.mobile.cryptocurrencies.app.portfolio.domain.PortfolioRepository
+import com.mobile.cryptocurrencies.app.portfolio.domain.PortfolioRepositoryImpl
+import com.mobile.cryptocurrencies.app.portfolio.presentation.PortfolioViewModel
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -37,6 +40,10 @@ val sharedModule = module {
     single {
         getPortfolioDatabase(get<RoomDatabase.Builder<PortfolioDatabase>>())
     }
+    singleOf(::PortfolioRepositoryImpl).bind<PortfolioRepository>()
+    single { get<PortfolioDatabase>().portfolioDao() }
+    single { get<PortfolioDatabase>().userBalanceDao() }
+    viewModel { PortfolioViewModel(get()) }
 
     // coins list
     viewModel {

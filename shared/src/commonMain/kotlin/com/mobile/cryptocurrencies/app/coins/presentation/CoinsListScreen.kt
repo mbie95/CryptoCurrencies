@@ -111,7 +111,7 @@ fun CoinsList(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CoinListItem(
+private fun CoinListItem(
     coin: com.mobile.cryptocurrencies.app.coins.presentation.UiCoinListItem,
     onCoinLongPressed: (String) -> Unit,
     onCoinClicked: (String) -> Unit,

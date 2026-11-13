@@ -6,8 +6,10 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
-@Suppress("NO_ACTUAL_FOR_EXPECT")
-expect object PortfolioDatabaseCreator : RoomDatabaseConstructor<PortfolioDatabase>
+@Suppress("KotlinNoActualForExpect", "NO_ACTUAL_FOR_EXPECT")
+expect object PortfolioDatabaseCreator : RoomDatabaseConstructor<PortfolioDatabase> {
+    override fun initialize(): PortfolioDatabase
+}
 
 fun getPortfolioDatabase(
     builder: RoomDatabase.Builder<PortfolioDatabase>
