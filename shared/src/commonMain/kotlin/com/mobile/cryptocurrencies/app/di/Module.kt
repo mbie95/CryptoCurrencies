@@ -11,6 +11,10 @@ import com.mobile.cryptocurrencies.app.core.network.HttpClientFactory
 import com.mobile.cryptocurrencies.app.portfolio.domain.PortfolioRepository
 import com.mobile.cryptocurrencies.app.portfolio.domain.PortfolioRepositoryImpl
 import com.mobile.cryptocurrencies.app.portfolio.presentation.PortfolioViewModel
+import com.mobile.cryptocurrencies.app.trade.domain.BuyCoinUseCase
+import com.mobile.cryptocurrencies.app.trade.domain.SellCoinUseCase
+import com.mobile.cryptocurrencies.app.trade.presentation.buy.BuyViewModel
+import com.mobile.cryptocurrencies.app.trade.presentation.sell.SellViewModel
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -56,4 +60,10 @@ val sharedModule = module {
     singleOf(::KtorCoinsRemoteDataSource).bind<com.mobile.cryptocurrencies.app.coins.domain.api.CoinsRemoteDataSource>()
     singleOf(::GetCoinDetailsUseCase)
     singleOf(::GetCoinPriceHistoryUseCase)
+
+    // trade
+    singleOf(::BuyCoinUseCase)
+    singleOf(::SellCoinUseCase)
+    viewModel { (coinId: String) -> BuyViewModel(get(), get(), get(), coinId) }
+    viewModel { (coinId: String) -> SellViewModel(get(), get(), get(), coinId) }
 }
