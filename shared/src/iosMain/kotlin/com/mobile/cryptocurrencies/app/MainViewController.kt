@@ -5,7 +5,4 @@ import com.mobile.cryptocurrencies.App
 import com.mobile.cryptocurrencies.app.di.initKoin
 
 fun MainViewController() = ComposeUIViewController(
-    configure = {
-        initKoin()
-    }
 ) { App() }

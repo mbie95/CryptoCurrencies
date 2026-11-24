@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class PortfolioRepositoryImpl(
     private val portfolioDao: PortfolioDao,
@@ -123,8 +124,8 @@ class PortfolioRepositoryImpl(
     }
 
     override fun cashBalanceFlow(): Flow<Double> {
-        return flow {
-            emit(userBalanceDao.getCashBalance() ?: 10000.0)
+        return userBalanceDao.observeCashBalance().map { balance ->
+            balance ?: 10000.0
         }
     }
 
@@ -145,6 +146,11 @@ class PortfolioRepositoryImpl(
     }
 
     override suspend fun updateCashBalance(newBalance: Double) {
-        userBalanceDao.updateCashBalance(newBalance)
+        userBalanceDao.insertBalance(
+            UserBalanceEntity(
+                id = 1,
+                cashBalance = newBalance
+            )
+        )
     }
 }
